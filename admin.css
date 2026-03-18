@@ -479,6 +479,39 @@ body {
 }
 
 .btn-sm.primary:hover { background: var(--red-mid); color: #fff; }
+/* ── Dispatch Orders Panel ─────────────────────────────────── */
+#dispatch-orders .panel-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#dispatchLog {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.dispatch-entry {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12.5px;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+.feed-item.dispatch {
+  background-color: #f0fff0; /* light green background */
+  border-left: 3px solid #28a745; /* green accent */
+}
+
+.feed-item.dispatch .feed-msg {
+  color: #155724; /* darker green text */
+  font-weight: bold;
+}
 
 /* ── Alert Table ────────────────────────────────────────────── */
 .alert-table { width: 100%; }
