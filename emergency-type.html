@@ -33,77 +33,108 @@
 
 <div class="page">
   <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Emergency Type</span></div>
-  <h1 class="page-title">SELECT EMERGENCY TYPE</h1>
-  <p class="page-desc">Choose your emergency and describe the situation so responders arrive fully prepared.</p>
 
-  <div class="cards-grid">
-
-    <div class="ecard card-police" onclick="openPanel('police')">
-      <div class="card-img">
-        <svg viewBox="0 0 80 80" fill="none" style="width:72px;height:72px;">
-          <path d="M40 16L18 26v14c0 11.05 9.4 21.4 22 24.07C52.6 61.4 62 51.05 62 40V26L40 16z" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.2)"/>
-          <path d="M32 40l5 5 11-11" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-type">Law Enforcement</div>
-        <div class="card-name">POLICE</div>
-        <div class="card-desc">Criminal activity, safety threats, accidents, disturbances, or any situation requiring police.</div>
-        <div class="card-footer">
-          <div class="arrow-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+  <!-- PILL BAR — always at top, always visible -->
+  <div class="pill-bar">
+    <div class="pill-top">
+      <div class="pill-left">
+        <div class="pill-dots">
+          <div class="pill-dot active" id="pd1"></div>
+          <div class="pill-dot" id="pd2"></div>
+          <div class="pill-dot" id="pd3"></div>
         </div>
+        <div class="pill-name" id="pillName">Choose Emergency Type</div>
+      </div>
+      <div class="pill-counter" id="pillCounter">1 / 3</div>
+    </div>
+    <div class="pill-track"><div class="pill-fill" id="pillFill"></div></div>
+  </div>
+
+  <!-- DESKTOP STEPPER -->
+  <div class="steps-wrap">
+    <div class="steps">
+      <div class="step">
+        <div class="step-circle active" id="sc1">1</div>
+        <div class="step-info"><div class="step-num">Step 1</div><div class="step-label active" id="sl1">Choose Type</div></div>
+      </div>
+      <div class="step-line" id="line1"></div>
+      <div class="step">
+        <div class="step-circle" id="sc2">2</div>
+        <div class="step-info"><div class="step-num">Step 2</div><div class="step-label" id="sl2">Describe Situation</div></div>
+      </div>
+      <div class="step-line" id="line2"></div>
+      <div class="step">
+        <div class="step-circle" id="sc3">3</div>
+        <div class="step-info"><div class="step-num">Step 3</div><div class="step-label" id="sl3">Send Alert</div></div>
       </div>
     </div>
+  </div>
 
-    <div class="ecard card-medical" onclick="openPanel('medical')">
-      <div class="card-img">
-        <svg viewBox="0 0 80 80" fill="none" style="width:72px;height:72px;">
-          <rect x="20" y="20" width="40" height="40" rx="8" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.2)"/>
-          <line x1="40" y1="28" x2="40" y2="52" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
-          <line x1="28" y1="40" x2="52" y2="40" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="card-body">
-        <div class="card-type">Medical Services</div>
-        <div class="card-name">MEDICAL</div>
-        <div class="card-desc">Injury, illness, cardiac events, breathing difficulties, or any medical emergency.</div>
-        <div class="card-footer">
-          <div class="arrow-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+  <!-- SCREEN 1: TYPE SELECTION -->
+  <div class="screen" id="screen1">
+    <h1 class="page-title">SELECT EMERGENCY TYPE</h1>
+    <p class="page-desc">Choose your emergency and describe the situation so responders arrive fully prepared.</p>
+    <div class="cards-grid">
+      <div class="ecard card-police" onclick="goToStep2('police')">
+        <div class="card-img">
+          <svg viewBox="0 0 80 80" fill="none" style="width:72px;height:72px;">
+            <path d="M40 12 L 18 22 V 36 C 18 50 28 62 40 68 C 52 62 62 50 62 36 V 22 L 40 12 Z" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.15)" stroke-linejoin="round"/>
+            <path d="M40 26 L 43 33 H 50 L 44 38 L 46 45 L 40 41 L 34 45 L 36 38 L 30 33 H 37 L 40 26 Z" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-type">Law Enforcement</div>
+          <div class="card-name">POLICE</div>
+          <div class="card-desc">Criminal activity, safety threats, accidents, disturbances, or any situation requiring police.</div>
+          <div class="card-footer"><div class="arrow-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
         </div>
       </div>
-    </div>
-
-    <div class="ecard card-fire" onclick="openPanel('fire')">
-      <div class="card-img">
-        <svg viewBox="0 0 80 80" fill="none" style="width:72px;height:72px;">
-          <path d="M40 14c0 0-10 10-10 22a10 10 0 0 0 20 0c0-4-1.5-7.5-4-11 0 4-2 7-4 7-2 0-4-3-4-6C38 22 40 14 40 14z" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.25)" stroke-linejoin="round"/>
-          <path d="M32 50c0 0 2 8 8 8s8-8 8-8" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
+      <div class="ecard card-medical" onclick="goToStep2('medical')">
+        <div class="card-img">
+          <svg viewBox="0 0 80 80" fill="none" style="width:72px;height:72px;">
+            <rect x="16" y="16" width="48" height="48" rx="12" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.15)"/>
+            <path d="M16 52 h 12 l 4 -10 l 6 20 l 6 -14 l 4 4 h 16" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+            <path d="M40 28 v 24 M28 40 h 24" stroke="white" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-type">Medical Services</div>
+          <div class="card-name">MEDICAL</div>
+          <div class="card-desc">Injury, illness, cardiac events, breathing difficulties, or any medical emergency.</div>
+          <div class="card-footer"><div class="arrow-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+        </div>
       </div>
-      <div class="card-body">
-        <div class="card-type">Fire Services</div>
-        <div class="card-name">FIRE ALERT</div>
-        <div class="card-desc">Structure fires, wildfires, gas leaks, explosions, or any fire and rescue situation.</div>
-        <div class="card-footer">
-          <div class="arrow-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      <div class="ecard card-fire" onclick="goToStep2('fire')">
+        <div class="card-img">
+          <svg viewBox="0 0 80 80" fill="none" style="width:72px;height:72px;">
+            <path d="M40 12 C 40 12 24 28 24 46 C 24 54.8 31.2 62 40 62 C 48.8 62 56 54.8 56 46 C 56 28 40 12 40 12 Z" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.15)" stroke-linejoin="round"/>
+            <path d="M40 34 C 40 34 32 42 32 50 C 32 54.4 35.6 58 40 58 C 44.4 58 48 54.4 48 50 C 48 42 40 34 40 34 Z" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-type">Fire Services</div>
+          <div class="card-name">FIRE ALERT</div>
+          <div class="card-desc">Structure fires, wildfires, gas leaks, explosions, or any fire and rescue situation.</div>
+          <div class="card-footer"><div class="arrow-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:15px;height:15px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- SITUATION PANEL (appears below grid after card click) -->
-  <div class="situation-wrap" id="situationWrap">
-    <div class="sw-header">
-      <div class="sw-title" id="swTitle">DESCRIBE THE SITUATION</div>
-      <button class="sw-close" onclick="closePanel()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px;"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  <!-- SCREEN 2: SITUATION SELECTION -->
+  <div class="screen hidden" id="screen2">
+    <div class="sit-screen-header">
+      <button class="back-btn" onclick="goBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </button>
+      <div class="sit-screen-title">DESCRIBE SITUATION</div>
     </div>
-    <div class="sw-sub">Select one so responders can prepare before arrival.</div>
+    <div class="type-badge" id="typeBadge"></div>
+    <p class="sit-screen-sub">Select the best match — this helps responders prepare before arrival.</p>
     <div class="situations" id="situationBtns"></div>
     <button class="send-btn" id="sendBtn" disabled onclick="sendAlert()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:17px;height:17px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>
       <span id="sendLabel">SEND ALERT</span>
     </button>
   </div>
@@ -123,84 +154,92 @@
     document.getElementById('h3').style.transform=o?'translateY(-7px) rotate(-45deg)':'';
     document.body.style.overflow=o?'hidden':'';
   }
-
-  const SITUATIONS = {
-    police:{
-      title:'POLICE — SITUATION', sendLabel:'SEND POLICE ALERT', btnClass:'send-btn-police', activeClass:'active-police',
-      items:[
-        {icon:'🏠',label:'Break-in / Burglary'},{icon:'⚠️',label:'Assault / Violence'},
-        {icon:'💰',label:'Robbery'},{icon:'👤',label:'Suspicious Person'},
-        {icon:'🚗',label:'Road Accident'},{icon:'❓',label:'Other / Unsure'},
-      ]
-    },
-    medical:{
-      title:'MEDICAL — SITUATION', sendLabel:'SEND MEDICAL ALERT', btnClass:'send-btn-medical', activeClass:'active-medical',
-      items:[
-        {icon:'❤️',label:'Chest Pain / Heart'},{icon:'😶',label:'Unconscious / Unresponsive'},
-        {icon:'🫁',label:'Difficulty Breathing'},{icon:'🩹',label:'Severe Bleeding'},
-        {icon:'🧠',label:'Stroke Symptoms'},{icon:'💉',label:'Allergic Reaction'},
-        {icon:'⚡',label:'Seizure'},{icon:'❓',label:'Other / Unsure'},
-      ]
-    },
-    fire:{
-      title:'FIRE — SITUATION', sendLabel:'SEND FIRE ALERT', btnClass:'send-btn-fire', activeClass:'active-fire',
-      items:[
-        {icon:'🏢',label:'Building on Fire'},{icon:'🚗',label:'Vehicle Fire'},
-        {icon:'🌳',label:'Wildfire / Bush Fire'},{icon:'💨',label:'Gas Leak'},
-        {icon:'🆘',label:'Person Trapped'},{icon:'❓',label:'Other / Unsure'},
-      ]
-    }
+  const SITUATIONS={
+    police:{label:'POLICE',sendLabel:'SEND POLICE ALERT',btnClass:'send-btn-police',activeClass:'active-police',badgeClass:'type-badge-police',
+      items:[{icon:'🏠',label:'Break-in / Burglary'},{icon:'⚠️',label:'Assault / Violence'},{icon:'💰',label:'Robbery'},{icon:'👤',label:'Suspicious Person'},{icon:'🚗',label:'Road Accident'},{icon:'❓',label:'Other / Unsure'}]},
+    medical:{label:'MEDICAL',sendLabel:'SEND MEDICAL ALERT',btnClass:'send-btn-medical',activeClass:'active-medical',badgeClass:'type-badge-medical',
+      items:[{icon:'❤️',label:'Chest Pain / Heart'},{icon:'😶',label:'Unconscious'},{icon:'🫁',label:'Difficulty Breathing'},{icon:'🩹',label:'Severe Bleeding'},{icon:'🧠',label:'Stroke Symptoms'},{icon:'💉',label:'Allergic Reaction'},{icon:'⚡',label:'Seizure'},{icon:'❓',label:'Other / Unsure'}]},
+    fire:{label:'FIRE',sendLabel:'SEND FIRE ALERT',btnClass:'send-btn-fire',activeClass:'active-fire',badgeClass:'type-badge-fire',
+      items:[{icon:'🏢',label:'Building on Fire'},{icon:'🚗',label:'Vehicle Fire'},{icon:'🌳',label:'Wildfire / Bush Fire'},{icon:'💨',label:'Gas Leak'},{icon:'🆘',label:'Person Trapped'},{icon:'❓',label:'Other / Unsure'}]}
   };
+  let activeType=null,selectedSituation=null;
+  const STEP_NAMES=['Choose Emergency Type','Describe the Situation','Ready — Send Alert'];
+  const PILL_WIDTHS=['33.33%','66.66%','100%'];
 
-  let activeType = null, selectedSituation = null;
+  function setStep(n){
+    ['pd1','pd2','pd3'].forEach((id,i)=>{
+      const el=document.getElementById(id);
+      if(i+1<n) el.className='pill-dot done';
+      else if(i+1===n) el.className=n===3?'pill-dot active-green':'pill-dot active';
+      else el.className='pill-dot';
+    });
+    document.getElementById('pillName').textContent=STEP_NAMES[n-1];
+    document.getElementById('pillCounter').textContent=n+' / 3';
+    const fill=document.getElementById('pillFill');
+    fill.style.width=PILL_WIDTHS[n-1];
+    fill.style.background=n===3?'var(--green)':'var(--red)';
+    const states={1:['active','',''],2:['done','active',''],3:['done','done','done']};
+    const s=states[n];
+    ['sc1','sc2','sc3'].forEach((id,i)=>{
+      const el=document.getElementById(id);
+      el.className='step-circle'+(s[i]?' '+s[i]:'');
+      el.innerHTML=s[i]==='done'?'✓':(i+1);
+    });
+    ['sl1','sl2','sl3'].forEach((id,i)=>{
+      document.getElementById(id).className='step-label'+(s[i]?' '+s[i]:'');
+    });
+    document.getElementById('line1').className='step-line'+(n>1?' done':'');
+    document.getElementById('line2').className='step-line'+(n>2?' done':n===2?' halfway':'');
+  }
 
-  function openPanel(type) {
-    document.querySelectorAll('.ecard').forEach(c => c.classList.remove('selected'));
-    document.querySelector('.card-' + type).classList.add('selected');
-    activeType = type;
-    selectedSituation = null;
+  function showScreen(id){
+    document.getElementById('screen1').classList.add('hidden');
+    document.getElementById('screen2').classList.add('hidden');
+    document.getElementById(id).classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
 
-    const cfg = SITUATIONS[type];
-    document.getElementById('swTitle').textContent = cfg.title;
-    const btn = document.getElementById('sendBtn');
-    btn.className = 'send-btn ' + cfg.btnClass;
-    btn.disabled = true;
-    document.getElementById('sendLabel').textContent = cfg.sendLabel;
-
-    document.getElementById('situationBtns').innerHTML = cfg.items.map(item =>
+  function goToStep2(type){
+    activeType=type; selectedSituation=null;
+    const cfg=SITUATIONS[type];
+    const badge=document.getElementById('typeBadge');
+    badge.textContent=cfg.label;
+    badge.className='type-badge '+cfg.badgeClass;
+    const btn=document.getElementById('sendBtn');
+    btn.className='send-btn '+cfg.btnClass;
+    btn.disabled=true;
+    document.getElementById('sendLabel').textContent=cfg.sendLabel;
+    document.getElementById('situationBtns').innerHTML=cfg.items.map(item=>
       `<button class="sit-btn" onclick="selectSit(this,'${item.label}')">
         <span class="sit-icon">${item.icon}</span>
         <span class="sit-label">${item.label}</span>
-      </button>`
-    ).join('');
-
-    const wrap = document.getElementById('situationWrap');
-    wrap.classList.add('open');
-    setTimeout(() => wrap.scrollIntoView({behavior:'smooth', block:'nearest'}), 60);
+      </button>`).join('');
+    showScreen('screen2');
+    setStep(2);
   }
 
-  function closePanel() {
-    document.getElementById('situationWrap').classList.remove('open');
-    document.querySelectorAll('.ecard').forEach(c => c.classList.remove('selected'));
-    activeType = null; selectedSituation = null;
+  function goBack(){
+    showScreen('screen1');
+    activeType=null; selectedSituation=null;
+    setStep(1);
   }
 
-  function selectSit(btn, label) {
-    document.querySelectorAll('#situationBtns .sit-btn').forEach(b => b.classList.remove(SITUATIONS[activeType].activeClass));
+  function selectSit(btn,label){
+    document.querySelectorAll('#situationBtns .sit-btn').forEach(b=>b.classList.remove(SITUATIONS[activeType].activeClass));
     btn.classList.add(SITUATIONS[activeType].activeClass);
-    selectedSituation = label;
-    document.getElementById('sendBtn').disabled = false;
+    selectedSituation=label;
+    document.getElementById('sendBtn').disabled=false;
+    setStep(3);
   }
 
-  function sendAlert() {
-    if (!activeType || !selectedSituation) return;
-    localStorage.setItem('resq_alert', JSON.stringify({
-      id: 'RQ-' + Math.floor(Math.random()*900000+100000),
-      type: activeType,
-      situation: selectedSituation,
-      timestamp: new Date().toISOString()
+  function sendAlert(){
+    if(!activeType||!selectedSituation)return;
+    localStorage.setItem('resq_alert',JSON.stringify({
+      id:'RQ-'+Math.floor(Math.random()*900000+100000),
+      type:activeType,situation:selectedSituation,
+      timestamp:new Date().toISOString()
     }));
-    window.location.href = 'active-alert.html';
+    window.location.href='active-alert.html';
   }
 </script>
 </body>
