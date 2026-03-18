@@ -153,6 +153,38 @@
       </div><!-- /panel -->
 
     </div><!-- /two-col -->
+<div class="panel" id="dispatch-orders">
+  <div class="panel-header">
+    <div class="panel-title">🚨 Dispatch Orders</div>
+  </div>
+  <div class="panel-body">
+    <form id="dispatchForm">
+      <label class="form-label" for="orderDetails">Order Details:</label>
+      <textarea class="form-textarea" id="orderDetails" name="orderDetails" rows="4" required></textarea>
+
+      <label class="form-label" for="authorizedBy">Authorized By:</label>
+      <input class="form-input" type="text" id="authorizedBy" name="authorizedBy" placeholder="Admin Name" required>
+
+      <button class="btn-submit" type="submit">Submit Dispatch</button>
+    </form>
+
+    <div id="dispatchLog" style="margin-top:20px;">
+      <h3 class="form-label">Dispatch Log</h3>
+      <!-- Entries will appear here -->
+    </div>
+  </div>
+</div>
+<!--activity ofthe dispatcher-->
+<div class="panel" id="activity-feed-panel">
+  <div class="panel-header">
+    <div class="panel-title">📜 Activity Feed</div>
+  </div>
+  <div class="panel-body">
+    <div id="activity-feed">
+      <div style="font-size:12px;color:var(--text-dim);">No activity yet.</div>
+    </div>
+  </div>
+</div>
 
     <!-- MAP PANEL -->
     <div class="map-panel" id="location-map">
@@ -792,8 +824,101 @@ document.head.appendChild(style);
   await loadStoredAlerts();
   renderAll();
   setActiveNav(document.querySelector('.nav-item.active'));
-})();
+  renderDispatchDropdown();
+  loadStoredDispatches();
+  localStorage.removeItem('resq_dispatches');
 
+})();
+// ── Dispatch Orders Logic ───────────────────────────────
+const dispatchForm = document.getElementById('dispatchForm');
+const dispatchLog = document.getElementById('dispatchLog');
+
+if (dispatchForm) {
+  dispatchForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const order = document.getElementById('orderDetails').value.trim();
+    const admin = document.getElementById('authorizedBy').value.trim();
+
+    if (!order || !admin) {
+      alert("⚠️ Please fill in all fields.");
+      return;
+    }
+
+    const entry = document.createElement('div');
+    entry.className = "dispatch-entry";
+    const now = new Date().toLocaleTimeString('en-KE', { hour12: false });
+    entry.textContent = `Order: ${order} | Authorized by: ${admin} | Time: ${now}`;
+
+    dispatchLog.appendChild(entry);
+
+    // Save structured dispatch order
+    const dispatch_obj = {
+      id: Date.now(),
+      order,
+      admin,
+      timeStr: now,
+      status: 'active'
+    };
+    let dispatches = JSON.parse(localStorage.getItem('resq_dispatches') || '[]');
+    dispatches.unshift(dispatch_obj);
+    localStorage.setItem('resq_dispatches', JSON.stringify(dispatches));
+    addDispatchFeed(dispatch_obj);
+
+    dispatchForm.reset();
+  });
+}
+ // ── Render Dispatch Dropdown ───────────────────────────────
+function renderDispatchDropdown() {
+  const container = document.getElementById('dispatch-dropdown');
+  if (!container) return;
+
+  let dispatches = JSON.parse(localStorage.getItem('resq_dispatches') || '[]');
+  if (dispatches.length === 0) {
+    container.innerHTML = `
+      <div class="dropdown-title">No dispatches</div>
+      <div style="font-size:12px;color:var(--text-dim);">All clear.</div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="dropdown-title">Active Dispatches (${dispatches.length})</div>
+    ${dispatches.map(d => `
+      <div class="dropdown-item">
+        <div class="dropdown-dot green"></div>
+        <div class="dropdown-content">
+          <div>${escHtml(d.order)}</div>
+          <div class="dropdown-time">${d.timeStr} · Authorized by ${escHtml(d.admin)}</div>
+        </div>
+      </div>
+    `).join('')}
+  `;
+}
+// ── Add Dispatch to Activity Feed ───────────────────────────────
+function addDispatchFeed(d) {
+  const feed = document.getElementById('activity-feed');
+  if (!feed) return;
+
+  const item = document.createElement('div');
+  item.className = 'feed-item';
+  item.innerHTML = `
+    <div class="feed-dot-wrap">
+      <div class="feed-dot green"></div>
+      <div class="feed-line"></div>
+    </div>
+    <div class="feed-content">
+      <div class="feed-msg"><strong>🚨 Dispatch Order</strong> authorized by ${escHtml(d.admin)}</div>
+      <div class="feed-time">${d.timeStr} · ${escHtml(d.order)}</div>
+    </div>
+  `;
+
+  feed.insertBefore(item, feed.firstChild);
+}
+function loadStoredDispatches() {
+  let dispatches = JSON.parse(localStorage.getItem('resq_dispatches') || '[]');
+  dispatches.forEach(d => addDispatchFeed(d));
+}
 </script>
 </body>
 </html>
